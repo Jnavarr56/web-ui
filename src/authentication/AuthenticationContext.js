@@ -3,6 +3,7 @@ import { CircularProgress, Dialog } from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'
 import { useLocation, useHistory } from 'react-router-dom'
 import axios from 'axios'
+import axiosWithHeaders from 'utils/axiosWithHeaders'
 import jsCookie from 'js-cookie'
 import { context as AuthContext } from 'authentication'
 
@@ -39,40 +40,34 @@ const AuthenticationContext = props => {
 	useEffect(() => {
 		if (pathname === '/auth/callback') {
 			axios
-				.get(`http://localhost:4000/authentication/callback${search}`)
+				.get(`/api/authentication/callback${search}`)
 				.then(({ data }) => {
-					const { token_data, ...sessionData } = data
-					jsCookie.set('speeterfoo', token_data.access_token)
-					setSession(sessionData)
+					setSession({ 
+						user_data: data.user_data, 
+						spotify_me_data: data.spotify_me_data 
+					})
 				})
-				.catch(error => {
-					const { response } = error
-					history.push(`/errors/error-${(response && response.status) || 500}`)
+				.catch(({ response }) => {
+					history.push(
+						`/errors/error-${response ? response.status : 500}`
+					)
 				})
 				.finally(() => setFetching(false))
+
 		} else {
-			const authCookie = jsCookie.get('speeterfoo')
 
-			if (authCookie) {
-				const config = {
-					headers: {
-						Authorization: `Bearer ${authCookie}`
-					}
-				}
-				axios
-					.get('http://localhost:4000/authentication/re-authorize', config)
+			if (jsCookie.get('speeterfoo')) {
+				axiosWithHeaders()
+					.get('/api/authentication/re-authorize')
 					.then(({ data }) => {
-						const { token_data, ...sessionData } = data
-						if (token_data) {
-							jsCookie.set('speeterfoo', token_data.access_token)
-						}
-						setSession(sessionData)
+						setSession({ 
+							user_data: data.user_data, 
+							spotify_me_data: data.spotify_me_data 
+						})
 					})
-					.catch(error => {
+					.catch(({ response }) => {
 						jsCookie.remove('speeterfoo')
-
-						const { response } = error
-						if (response && response.status !== 401) {
+						if (response && (response.status !== 401)) {
 							history.push(`/errors/error-${response.status}`)
 						}
 					})

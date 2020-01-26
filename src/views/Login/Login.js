@@ -101,7 +101,7 @@ const Login = () => {
 	const handleSpotifyRedirect = useCallback(() => {
 		setFetchingSpotifyURL(true)
 		axios
-			.get('http://localhost:4000/authentication/initiate')
+			.get('/api/authentication/initiate')
 			.then(({ data }) => (window.location = data.spotify_authorization_url))
 			.catch(({ response }) => {
 				console.log(response)
