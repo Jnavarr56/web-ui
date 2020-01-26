@@ -1,1 +1,1 @@
-export { default } from './ScrollReset';
+export { default } from './ScrollReset'

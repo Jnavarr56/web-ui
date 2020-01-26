@@ -1,1 +1,1 @@
-export { default } from './TableEditBar';
+export { default } from './TableEditBar'

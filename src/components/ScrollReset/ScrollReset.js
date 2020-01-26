@@ -1,15 +1,15 @@
-import { useEffect } from 'react';
+import { useEffect } from 'react'
 
-import useRouter from 'utils/useRouter';
+import useRouter from 'utils/useRouter'
 
 const ScrollReset = () => {
-  const router = useRouter();
+	const router = useRouter()
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [router.location.pathname]);
+	useEffect(() => {
+		window.scrollTo(0, 0)
+	}, [ router.location.pathname ])
 
-  return null;
-};
+	return null
+}
 
-export default ScrollReset;
+export default ScrollReset

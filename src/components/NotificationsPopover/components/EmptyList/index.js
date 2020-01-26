@@ -1,1 +1,1 @@
-export { default } from './EmptyList';
+export { default } from './EmptyList'

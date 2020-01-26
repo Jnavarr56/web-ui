@@ -1,1 +1,1 @@
-export { default } from './NotificationsPopover';
+export { default } from './NotificationsPopover'

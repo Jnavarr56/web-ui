@@ -1,1 +1,1 @@
-export { default } from './GenericMoreButton';
+export { default } from './GenericMoreButton'

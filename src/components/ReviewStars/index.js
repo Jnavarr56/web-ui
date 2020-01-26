@@ -1,1 +1,1 @@
-export { default } from './ReviewStars';
+export { default } from './ReviewStars'

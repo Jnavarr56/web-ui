@@ -1,1 +1,1 @@
-export { default } from './PricingModal';
+export { default } from './PricingModal'

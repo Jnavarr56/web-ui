@@ -42,32 +42,28 @@ const AuthenticationContext = props => {
 			axios
 				.get(`/api/authentication/callback${search}`)
 				.then(({ data }) => {
-					setSession({ 
-						user_data: data.user_data, 
-						spotify_me_data: data.spotify_me_data 
+					setSession({
+						user_data: data.user_data,
+						spotify_me_data: data.spotify_me_data
 					})
 				})
 				.catch(({ response }) => {
-					history.push(
-						`/errors/error-${response ? response.status : 500}`
-					)
+					history.push(`/errors/error-${response ? response.status : 500}`)
 				})
 				.finally(() => setFetching(false))
-
 		} else {
-
 			if (jsCookie.get('speeterfoo')) {
 				axiosWithHeaders()
 					.get('/api/authentication/re-authorize')
 					.then(({ data }) => {
-						setSession({ 
-							user_data: data.user_data, 
-							spotify_me_data: data.spotify_me_data 
+						setSession({
+							user_data: data.user_data,
+							spotify_me_data: data.spotify_me_data
 						})
 					})
 					.catch(({ response }) => {
 						jsCookie.remove('speeterfoo')
-						if (response && (response.status !== 401)) {
+						if (response && response.status !== 401) {
 							history.push(`/errors/error-${response.status}`)
 						}
 					})

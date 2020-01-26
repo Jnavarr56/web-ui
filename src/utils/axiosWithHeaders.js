@@ -5,17 +5,16 @@ import jsCookie from 'js-cookie'
 // const { REACT_APP_AUTH_COOKIE: AUTH_COOKIE } = process.env
 
 const axiosWithHeaders = () => {
-    
-    const accessToken = jsCookie.get('speeterfoo')
+	const accessToken = jsCookie.get('speeterfoo')
 
 	if (accessToken) {
 		return axios.create({
-            headers: {
-                'Authorization': `Bearer ${accessToken}` 
-            }
-        })
-    } 
-     
+			headers: {
+				Authorization: `Bearer ${accessToken}`
+			}
+		})
+	}
+
 	return axios
 }
 
